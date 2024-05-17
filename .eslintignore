@@ -10,6 +10,10 @@
 /bower_components/
 /node_modules/
 
+# compiled output
+/declarations/
+/dist/
+
 # misc
 /coverage/
 !.*
@@ -18,3 +22,7 @@
 /.node_modules.ember-try/
 /bower.json.ember-try
 /package.json.ember-try
+.*/
+
+# ember-try
+/.node_modules.ember-try/

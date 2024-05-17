@@ -1,13 +1,18 @@
-# Ember Infinity
-[![Build Status](https://travis-ci.org/ember-infinity/ember-infinity.svg)](https://travis-ci.org/ember-infinity/ember-infinity)
-[![npm version](https://badge.fury.io/js/ember-infinity.svg)](http://badge.fury.io/js/ember-infinity)
-[![Ember Observer Score](http://emberobserver.com/badges/ember-infinity.svg)](http://emberobserver.com/addons/ember-infinity)
+# ember-infinity
 
 [![Code Climate](https://codeclimate.com/github/ember-infinity/ember-infinity/badges/gpa.svg)](https://codeclimate.com/github/ember-infinity/ember-infinity)
 [![Dependency Status](https://david-dm.org/ember-infinity/ember-infinity.svg)](https://david-dm.org/ember-infinity/ember-infinity)
 [![devDependency Status](https://david-dm.org/ember-infinity/ember-infinity/dev-status.svg)](https://david-dm.org/ember-infinity/ember-infinity#info=devDependencies)
 
-Demo: [ember-infinity.github.io/ember-infinity/](https://ember-infinity.github.io/ember-infinity/)
+
+## Compatibility
+
+* Ember.js v4.12 or above
+* Ember CLI v4.12 or above
+* Node.js v18 or above
+
+
+## Installation
 
 Simple, flexible infinite scrolling for Ember CLI Apps.  Works out of the box
 with the [Kaminari Gem](https://github.com/amatsuda/kaminari.git).
@@ -141,7 +146,7 @@ export default Route.extend({
 ```
 
 
-### Service Methods
+## Usage
 
 The infinity service also exposes 5 methods to fetch & mutate your collection:
 
@@ -567,31 +572,12 @@ Triggered on the route whenever new objects are pushed into the infinityModel.
 **Args:**
 
 
-**infinityModelLoaded**
+## Contributing
 
-* lastPageLoaded
-
-* totalPages
-
-* infinityModel
-
-Triggered on the route when the infinityModel is fully loaded.
-
-**Args:**
-
-* totalPages
+See the [Contributing](CONTRIBUTING.md) guide for details.
 
 
-```js
-import Route from '@ember/routing/route';
-
-export default Route.extend({
-  ...
-
-  model() {
-    /* Load pages of the Product Model, starting from page 1, in groups of 12. */
-    return this.infinity.model('product', { perPage: 12, startingPage: 1 });
-  },
+## License
 
   infinityModelUpdated({ lastPageLoaded, totalPages, newObjects }) {
     Ember.Logger.debug('updated with more items');
