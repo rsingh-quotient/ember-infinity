@@ -4,11 +4,11 @@ import { inject as service } from '@ember/service';
 export default Component.extend({
   infinity: service(),
 
-  tagName: '',
+  classNames: ['list-items'],
 
   init() {
     this._super(...arguments);
 
-    this.posts = this.infinity.model('post', { perPage: 5 });
+    this.posts = this.get('infinity').model('post', { perPage: 5 });
   }
 });

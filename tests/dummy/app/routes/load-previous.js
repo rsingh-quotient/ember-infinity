@@ -19,7 +19,9 @@ export default Route.extend({
   infinity: service(),
 
   init() {
-    this._super(...arguments);
+    if (this._super.init) {
+      this._super.init.apply(this, arguments);
+    }
     let fakeData = generateFakeData(104);
     this.set('pretender', new Pretender());
     this.get('pretender').get('/posts', request => {

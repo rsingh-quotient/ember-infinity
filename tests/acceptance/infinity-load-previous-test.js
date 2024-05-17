@@ -1,5 +1,5 @@
 import { module, test } from 'qunit';
-import { visit, find, settled, triggerEvent, waitUntil } from '@ember/test-helpers';
+import { visit, find, triggerEvent } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import defaultScenario from '../../mirage/scenarios/default';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -30,11 +30,7 @@ module('Acceptance: Infinity Route - load previous', function(hooks) {
     document.getElementsByClassName('infinity-loader-bottom')[0].scrollIntoView(false);
   }
 
-  async function shouldBeItemsOnTheList(assert, amount) {
-    await waitUntil(() => {
-      return postList().querySelectorAll('p').length === amount;
-    });
-
+  function shouldBeItemsOnTheList(assert, amount) {
     assert.equal(postList().querySelectorAll('p').length, amount, `${amount} items should be in the list`);
   }
 
@@ -52,26 +48,25 @@ module('Acceptance: Infinity Route - load previous', function(hooks) {
     defaultScenario(this.server);
     await visit('/load-previous');
 
-    await shouldBeItemsOnTheList(assert, 25);
+    shouldBeItemsOnTheList(assert, 25);
     infinityShouldNotBeReached(assert);
     scrollTo(triggerOffset() - 100);
 
     await triggerEvent(window, 'scroll');
 
-    await shouldBeItemsOnTheList(assert, 25);
+    shouldBeItemsOnTheList(assert, 25);
     scrollIntoView();
 
     await triggerEvent(window, 'scroll');
 
-    await shouldBeItemsOnTheList(assert, 50);
+    shouldBeItemsOnTheList(assert, 50);
   });
 
   test('it should load previous elements when start on page two', async function(assert) {
     defaultScenario(this.server);
     await visit('/load-previous?page=2');
 
-    await settled();
-    await shouldBeItemsOnTheList(assert, 50);
+    shouldBeItemsOnTheList(assert, 50);
     // This is difficult b/c of #ember-testing-container
     // assert.equal(document.querySelectorAll('.posts p')[25].offsetTop, 12500, 'scrollable list has elements above (each 250px high * 25)');
   });

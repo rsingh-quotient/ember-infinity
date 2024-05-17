@@ -19,12 +19,11 @@ module('Acceptance: Infinity Route - non blocking', function(hooks) {
     assertDetails(assert, {
       title: 'Non Blocking Model Test',
       listLength: 15,
-      reachedInfinity: true
+      reachedInfinity: false
     });
   });
 
   test('it renders items with non-blocking component', async function(assert) {
-    this.server.createList('post', 35);
     await visit('/nested-component');
 
     assertDetails(assert, {

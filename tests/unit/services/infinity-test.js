@@ -117,47 +117,15 @@ module('Unit | Service | infinity', function(hooks) {
     let service = this.owner.lookup('service:infinity');
     service.loadNextPage = () => new RSVP.Promise((resolve) => { resolve(); });
     let date = 3600;
-    let model = service.model('post', {
-      infinityCache: date,
-      startingPage: 3,
-      wut: true,
-      message: { plastic: 'climate-change' }
-    });
+    let model = service.model('post', { infinityCache: date, startingPage: 3 });
     assert.ok(typeof(model.then) === 'function');
-    assert.ok(Object.keys(service.get('_cachedCollection')['post36003true'])[0] > Date.now(), 'collection has correct key');
-    model = service.model('post', { infinityCache: date, startingPage: 3, wut: true });
+    assert.ok(Object.keys(service.get('_cachedCollection')['post36003'])[0] > Date.now(), 'collection has correct key');
+    model = service.model('post', { infinityCache: date, startingPage: 3 });
     assert.ok(model instanceof InfinityModel, 'returns cached model');
     model = service.model('post', { infinityCache: date, startingPage: 10 });
     assert.ok(typeof(model.then) === 'function', 'diff identifier will return thennable');
-    model = service.model('post', { infinityCache: date, startingPage: 3, wut: true });
+    model = service.model('post', { infinityCache: date, startingPage: 3 });
     assert.ok(model instanceof InfinityModel, 'returns cached model again');
-  });
-
-  test('model hook can return cached infinity model with unique identifier that is a nested object', function(assert) {
-    let service = this.owner.lookup('service:infinity');
-    service.loadNextPage = () => new RSVP.Promise((resolve) => { resolve(); });
-    let date = 3600;
-    let model = service.model('post', { infinityCache: date, filter: { category: 'toe-socks' } });
-    assert.ok(typeof(model.then) === 'function');
-    assert.ok(Object.keys(service.get('_cachedCollection')['post3600toe-socks'])[0] > Date.now(), 'collection has correct key');
-    model = service.model('post', { infinityCache: date, filter: { category: 'toe-socks' } });
-    assert.ok(model instanceof InfinityModel, 'returns cached model');
-    model = service.model('post', { infinityCache: date, filter: { category: 'finger-socks' } });
-    assert.ok(typeof(model.then) === 'function', 'diff identifier will return thennable');
-    model = service.model('post', { infinityCache: date, filter: { category: 'toe-socks' } });
-    assert.ok(model instanceof InfinityModel, 'returns cached model again');
-  });
-
-  // TODO: set up mirage so a request with `?limit=25` works
-  skip('model instance can be customized by extending InfinityModel', function(assert) {
-    const service = this.owner.lookup('service:infinity');
-    const perPageParam = 'limit';
-    const CustomizedInfinityModel = InfinityModel.extend({ perPageParam });
-    const model = service.model('post', {}, CustomizedInfinityModel);
-
-    service.loadNextPage = () => new RSVP.Promise((resolve) => { resolve(); });
-
-    assert.equal(model.get('perPageParam'), perPageParam, 'model has configured param');
   });
 
   test('pushObjects will maintain sync with underlying infinityModel', function(assert) {
