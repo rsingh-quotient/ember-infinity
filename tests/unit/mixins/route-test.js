@@ -80,7 +80,7 @@ module('Unit | RouteMixin', function(hooks) {
         customId: 2,
         buildParams() {
           let params = this._super(...arguments);
-          params['custom_id'] = get(this, 'customId');
+          params['custom_id'] = this.customId;
           return params;
         }
       });
@@ -209,7 +209,7 @@ module('Unit | RouteMixin', function(hooks) {
       assert.equal(model.get('_totalPages'), 31, '_totalPages');
       assert.equal(model.get('currentPage'), 1, 'currentPage');
       assert.equal(model.get('canLoadMore'), true, 'canLoadMore');
-      assert.notOk(route.get('_extraParams'), 'extra params are empty');
+      assert.notOk(route._extraParams, 'extra params are empty');
       assert.ok(!model.get('reachedInfinity'), 'Should not reach infinity');
     });
 
@@ -223,7 +223,7 @@ module('Unit | RouteMixin', function(hooks) {
       assert.equal(model.get('_count'), 31, '_count');
       assert.equal(model.get('currentPage'), 1, 'currentPage');
       assert.equal(model.get('canLoadMore'), true, 'canLoadMore');
-      assert.notOk(route.get('_extraParams'), 'extra params are empty');
+      assert.notOk(route._extraParams, 'extra params are empty');
       assert.ok(!model.get('reachedInfinity'), 'Should not reach infinity');
     });
 
@@ -250,7 +250,7 @@ module('Unit | RouteMixin', function(hooks) {
 
       let model = this.callModelHook(route);
 
-      assert.equal(route.get('currentPage'), 0);
+      assert.equal(route.currentPage, 0);
       assert.equal(model.get('canLoadMore'), false);
     });
 
@@ -382,7 +382,7 @@ module('Unit | RouteMixin', function(hooks) {
         customId: 2,
         buildParams() {
           let params = this._super(...arguments);
-          params['custom_id'] = get(this, 'customId');
+          params['custom_id'] = this.customId;
           return params;
         }
       });

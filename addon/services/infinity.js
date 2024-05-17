@@ -8,7 +8,12 @@ import { isEmpty, typeOf } from '@ember/utils';
 import { scheduleOnce } from '@ember/runloop';
 import { get, set } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { checkInstanceOf, convertToArray, objectAssign, paramsCheck } from '../utils';
+import {
+  checkInstanceOf,
+  convertToArray,
+  objectAssign,
+  paramsCheck
+} from '../utils';
 import { assert } from '@ember/debug';
 import { resolve } from 'rsvp';
 
@@ -138,7 +143,7 @@ export default Service.extend({
       return resolve();
     }
 
-    infinityModel = get(this, 'infinityModels').find(model => model === infinityModel);
+    infinityModel = this.infinityModels.find(model => model === infinityModel);
     let result;
     if (infinityModel) {
       // this is duplicated if this method is called from the route.
@@ -186,7 +191,7 @@ export default Service.extend({
     options = options ? objectAssign({}, options) : {};
 
     if (options.store) {
-      get(this, '_ensureCustomStoreCompatibility')(options, options.store, options.storeFindMethod || 'query');
+      this._ensureCustomStoreCompatibility(options, options.store, options.storeFindMethod || 'query');
     }
 
     // default is to start at 0, request next page and increment
@@ -197,14 +202,14 @@ export default Service.extend({
     const perPage = options.perPage || 25;
 
     // store service methods (defaults to ember-data if nothing passed)
-    const store = options.store || get(this, 'store');
+    const store = options.store || this.store;
     const storeFindMethod = options.storeFindMethod || 'query';
 
     // check if user passed in param w/ infinityModel, else check if defined on the route (for backwards compat), else default
-    const perPageParam = paramsCheck(options.perPageParam, get(this, 'perPageParam'), 'per_page');
-    const pageParam = paramsCheck(options.pageParam, get(this, 'pageParam'), 'page');
-    const totalPagesParam = paramsCheck(options.totalPagesParam, get(this, 'totalPagesParam'), 'meta.total_pages');
-    const countParam = paramsCheck(options.countParam, get(this, 'countParam'), 'meta.count');
+    const perPageParam = paramsCheck(options.perPageParam, this.perPageParam, 'per_page');
+    const pageParam = paramsCheck(options.pageParam, this.pageParam, 'page');
+    const totalPagesParam = paramsCheck(options.totalPagesParam, this.totalPagesParam, 'meta.total_pages');
+    const countParam = paramsCheck(options.countParam, this.countParam, 'meta.count');
     const infinityCache = paramsCheck(options.infinityCache);
 
     // create identifier for use in storing unique cached infinity model
@@ -257,10 +262,10 @@ export default Service.extend({
     }
 
     const infinityModel = InfinityModelFactory.create(initParams);
-    get(this, '_ensureCompatibility')(get(infinityModel, 'store'), get(infinityModel, 'storeFindMethod'));
+    this._ensureCompatibility(get(infinityModel, 'store'), get(infinityModel, 'storeFindMethod'));
 
     // route specific (for backwards compat)
-    get(this, 'infinityModels').pushObject(infinityModel);
+    this.infinityModels.pushObject(infinityModel);
 
     // internal service specific
     if (infinityCache) {
@@ -268,7 +273,7 @@ export default Service.extend({
 
       // 1. create identifier for storage in _cachedCollection
       let uniqueIdentifier = modelName += identifier;
-      let _cachedCollection = get(this, '_cachedCollection');
+      let _cachedCollection = this._cachedCollection;
       let cachedModel = _cachedCollection[uniqueIdentifier];
       if (cachedModel) {
         // 2. If cachedModel, get future_timestamp (ms since 1970) and compare to now
@@ -357,7 +362,7 @@ export default Service.extend({
     @return Integer
    */
   _updateScrollTop({ infinityModel, viewportElem }) {
-    let scrollDiff = this._calculateHeight(infinityModel) - get(this, '_previousScrollHeight');
+    let scrollDiff = this._calculateHeight(infinityModel) - this._previousScrollHeight;
     viewportElem.scrollTop += scrollDiff;
   },
 
@@ -413,7 +418,7 @@ export default Service.extend({
       return;
     }
 
-    const totalPages = get(this, '_totalPages');
+    const totalPages = this._totalPages;
     scheduleOnce('afterRender', infinityModel, 'infinityModelLoaded', { totalPages: totalPages });
   },
 

@@ -9,6 +9,6 @@ export default Component.extend({
   init() {
     this._super(...arguments);
 
-    this.posts = this.get('infinity').model('post', { perPage: 5 });
+    this.posts = this.infinity.model('post', { perPage: 5 });
   }
 });

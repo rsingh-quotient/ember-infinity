@@ -6,7 +6,7 @@ import { inject as service } from '@ember/service';
 const ExtendedInfinityModel =  InfinityModel.extend({
   buildParams() {
     let params = this._super(...arguments);
-    params['categoryId'] = get(this, 'global').categoryId;
+    params['categoryId'] = this.global.categoryId;
     return params;
   },
   afterInfinityModel(newObjects/*, infinityModel*/) {
@@ -20,11 +20,11 @@ export default Route.extend({
   infinity: service(),
 
   model() {
-    let global = get(this, 'global');
-    return get(this, 'infinity').model(
+    let global = this.global;
+    return this.infinity.model(
       'post',
       {},
       ExtendedInfinityModel.extend({ global })
-    )
+    );
   }
 });

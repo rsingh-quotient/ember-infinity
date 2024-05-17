@@ -192,9 +192,9 @@ export default ArrayProxy.extend({
           return (currentPage < _count / perPage) ? true : false;
         }
       }
-      if (get(this, 'firstPage') > 1) {
+      if (this.firstPage > 1) {
         // load previous page if starting page was not 1.  Otherwise ignore this block
-        return get(this, 'firstPage') > 1 ? true : false;
+        return this.firstPage > 1 ? true : false;
       }
       return false;
     },
@@ -214,13 +214,13 @@ export default ArrayProxy.extend({
     const pageParams = {};
     let { perPageParam, pageParam } = getProperties(this, 'perPageParam', 'pageParam');
     if (typeOf(perPageParam) === 'string') {
-      pageParams[perPageParam] = get(this, 'perPage');
+      pageParams[perPageParam] = this.perPage;
     }
     if (typeOf(pageParam) === 'string' ) {
-      pageParams[pageParam] = get(this, 'currentPage') + increment;
+      pageParams[pageParam] = this.currentPage + increment;
     }
 
-    return objectAssign(pageParams, get(this, 'extraParams'));
+    return objectAssign(pageParams, this.extraParams);
   },
 
   /**

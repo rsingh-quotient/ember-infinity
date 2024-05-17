@@ -6,6 +6,6 @@ export default Route.extend({
   infinity: service(),
 
   model() {
-    return get(this, 'infinity').model('post');
+    return this.infinity.model('post');
   }
 });

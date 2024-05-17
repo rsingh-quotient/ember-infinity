@@ -24,7 +24,7 @@ export default Route.extend({
     }
     let fakeData = generateFakeData(104);
     this.set('pretender', new Pretender());
-    this.get('pretender').get('/posts', request => {
+    this.pretender.get('/posts', request => {
       let fd = fakeData;
       let page = parseInt(request.queryParams.page, 10);
       let per =  parseInt(request.queryParams.per_page, 10);
@@ -44,6 +44,6 @@ export default Route.extend({
   },
 
   model({ page }) {
-    return get(this, 'infinity').model('post', { startingPage: page });
+    return this.infinity.model('post', { startingPage: page });
   }
 });

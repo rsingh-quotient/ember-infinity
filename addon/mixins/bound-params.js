@@ -24,7 +24,7 @@ export default Mixin.create({
     );
 
     let params = this._super(...arguments);
-    let boundParams = get(this, '_deprecatedBoundParams');
+    let boundParams = this._deprecatedBoundParams;
 
     if (!isEmpty(boundParams)) {
       Object.keys(boundParams).forEach(k => params[k] = get(this, `route.${boundParams[k]}`));

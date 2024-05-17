@@ -33,7 +33,7 @@ export default Service.extend({
    * @param {String} type
    */
   findAll(type) {
-    const containerObjs = this.get('persistentContainer')[type];
+    const containerObjs = this.persistentContainer[type];
     const content = Array.from(containerObjs.values());
     const arrProxy = ArrayProxy.create({ content: A(content) });
     return resolve(arrProxy);

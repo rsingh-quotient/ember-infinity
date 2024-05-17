@@ -44,10 +44,10 @@ const RouteMixin = Mixin.create({
       @return {Boolean}
      */
     infinityLoad(infinityModel, increment = 1) {
-      let matchingInfinityModel = get(this, '_infinityModels').find(model => model === infinityModel);
+      let matchingInfinityModel = this._infinityModels.find(model => model === infinityModel);
       if (matchingInfinityModel) {
         set(matchingInfinityModel, '_increment', increment);
-        get(this, 'infinity')['infinityLoad'](matchingInfinityModel, increment);
+        this.infinity['infinityLoad'](matchingInfinityModel, increment);
       } else {
         return true;
       }
@@ -86,7 +86,7 @@ const RouteMixin = Mixin.create({
       throw new EmberError("Ember Infinity: You must pass a Model Name to infinityModel");
     }
 
-    let service = get(this, 'infinity');
+    let service = this.infinity;
     if (!get(service, 'infinityModels')) {
       set(service, 'infinityModels', A());
     }
@@ -105,23 +105,23 @@ const RouteMixin = Mixin.create({
     const perPage = options.perPage || 25;
 
     // store service methods (defaults to ember-data if nothing passed)
-    const store = options.store || get(this, 'store');
+    const store = options.store || this.store;
     const storeFindMethod = options.storeFindMethod || 'query';
 
     // hook functions
     let infinityModelLoaded, afterInfinityModel;
     if (!ExtendedInfinityModel || (ExtendedInfinityModel && !ExtendedInfinityModel.infinityModelLoaded)) {
-      infinityModelLoaded = get(this, 'infinityModelLoaded');
+      infinityModelLoaded = this.infinityModelLoaded;
     }
     if (!ExtendedInfinityModel || (ExtendedInfinityModel && !ExtendedInfinityModel.afterInfinityModel)) {
-      afterInfinityModel = get(this, 'afterInfinityModel');
+      afterInfinityModel = this.afterInfinityModel;
     }
 
     // check if user passed in param w/ infinityModel, else check if defined on the route (for backwards compat), else default
-    const perPageParam = paramsCheck(options.perPageParam, get(this, 'perPageParam'), 'per_page');
-    const pageParam = paramsCheck(options.pageParam, get(this, 'pageParam'), 'page');
-    const totalPagesParam = paramsCheck(options.totalPagesParam, get(this, 'totalPagesParam'), 'meta.total_pages');
-    const countParam = paramsCheck(options.countParam, get(this, 'countParam'), 'meta.count');
+    const perPageParam = paramsCheck(options.perPageParam, this.perPageParam, 'per_page');
+    const pageParam = paramsCheck(options.pageParam, this.pageParam, 'page');
+    const totalPagesParam = paramsCheck(options.totalPagesParam, this.totalPagesParam, 'meta.total_pages');
+    const countParam = paramsCheck(options.countParam, this.countParam, 'meta.count');
 
     delete options.startingPage;
     delete options.perPage;
@@ -212,8 +212,8 @@ const RouteMixin = Mixin.create({
       until: '1.1.0'
     });
     scheduleOnce('afterRender', this, 'infinityModelUpdated', {
-      lastPageLoaded: get(this, 'currentPage'),
-      totalPages: get(this, '_totalPages'),
+      lastPageLoaded: this.currentPage,
+      totalPages: this._totalPages,
       newObjects: newObjects
     });
   }

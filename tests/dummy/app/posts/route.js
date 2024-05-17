@@ -6,6 +6,6 @@ export default Route.extend({
   infinity: service(),
 
   model() {
-    return get(this, 'infinity').model('post', { perPage: 1, startingPage: 1 });
+    return this.infinity.model('post', { perPage: 1, startingPage: 1 });
   }
 });

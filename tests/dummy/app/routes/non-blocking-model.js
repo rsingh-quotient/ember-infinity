@@ -7,7 +7,7 @@ export default Route.extend({
 
   model() {
     return {
-      posts: get(this, 'infinity').model('post')
-    }
+      posts: this.infinity.model('post')
+    };
   }
 });

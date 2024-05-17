@@ -11,12 +11,6 @@
     {{#each model as |item|}}
       <li>{{item.id}}. {{item.name}}</li>
     {{/each}}
-    {{infinity-loader
-      infinityModel=model
-      loadingText="Loading more awesome records..."
-      loadedText="Loaded all the records!"
-      triggerOffset=500
-      scrollable=".demo-items"
-    }}
+    <InfinityLoader @infinityModel={{model}} @loadingText="Loading more awesome records..." @loadedText="Loaded all the records!" @triggerOffset={{500}} @scrollable=".demo-items" />
   </ul>
 </div>
