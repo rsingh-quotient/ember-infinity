@@ -1,5 +1,5 @@
 import Mixin from '@ember/object/mixin';
-import { deprecate } from '@ember/application/deprecations';
+// import { deprecate } from '@ember/application/deprecations';
 import { get } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 
@@ -14,14 +14,14 @@ export default Mixin.create({
     @return {Object}
    */
   buildParams() {
-    deprecate(
-      "Ember Infinity: Bound params are now deprecated. Please pass explicitly as second param to the infinityModel method",
-      false,
-      {
-        id: 'ember-infinity',
-        until: '1.0.0'
-      }
-    );
+    // deprecate(
+    //   "Ember Infinity: Bound params are now deprecated. Please pass explicitly as second param to the infinityModel method",
+    //   false,
+    //   {
+    //     id: 'ember-infinity',
+    //     until: '1.0.0'
+    //   }
+    // );
 
     let params = this._super(...arguments);
     let boundParams = this._deprecatedBoundParams;

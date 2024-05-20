@@ -1,5 +1,5 @@
 import { typeOf } from '@ember/utils';
-import { deprecate } from '@ember/application/deprecations';
+// import { deprecate } from '@ember/application/deprecations';
 import InfinityModel from 'ember-infinity/lib/infinity-model';
 import EmberError from '@ember/error';
 
@@ -43,14 +43,14 @@ export function paramsCheck(optionParam, routeParam, defaultParam) {
     return optionParam;
 
   } else if (routeParam) {
-    deprecate(
-      `Ember Infinity: Please migrate route param - ${routeParam} - to be explicitly passed as second argument to infinityModel`,
-      false,
-      {
-        id: 'ember-infinity',
-        until: '1.0.0'
-      }
-    );
+    // deprecate(
+    //   `Ember Infinity: Please migrate route param - ${routeParam} - to be explicitly passed as second argument to infinityModel`,
+    //   false,
+    //   {
+    //     id: 'ember-infinity',
+    //     until: '1.0.0'
+    //   }
+    // );
     return routeParam;
 
   } else {
