@@ -39,7 +39,7 @@
     "@babel/core": "^7.24.4",
     "ember-cli-babel": "^8.2.0",
     "ember-cli-htmlbars": "^6.3.0",
-    "ember-in-viewport": "~3.10.3"
+    "ember-in-viewport": "github:rsingh-quotient/ember-in-viewport"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.24.1",
